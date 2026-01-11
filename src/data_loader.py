@@ -30,14 +30,30 @@ AUDIO_COLS = [
     "key","liveness","loudness","mode","speechiness","tempo","time_signature","valence"
 ]
 
+# path = Path(".")
+# files = sorted(path.glob("features_*.csv"))
+# dfs = [pd.read_csv(file) for file in files]
+# df_full = pd.concat(dfs, ignore_index=True)
+# df_full.to_csv("recombined_features.csv", index=False)
+
 #Data Loader functions - Included here for a more condensed main.py: 
 def load_features(path) -> pd.DataFrame:
-    df = pd.read_csv(path)
-    return df
+    #df = pd.read_csv(path)
+    BASE_DIR = Path(__file__).resolve().parent
+    DATA_PATH = BASE_DIR.parent / "data" / "raw"
+    files = sorted(DATA_PATH.glob("features_*.csv"))
+    dfs = [pd.read_csv(file) for file in files]
+    df_full = pd.concat(dfs, ignore_index=True)
+    return df_full
 
 def load_tracks(path) -> pd.DataFrame:
-    df = pd.read_csv(path)
-    return df
+    #df = pd.read_csv(path)
+    BASE_DIR = Path(__file__).resolve().parent
+    DATA_PATH = BASE_DIR.parent / "data" / "raw"
+    files = sorted(DATA_PATH.glob("tracks_*.csv"))
+    dfs = [pd.read_csv(file) for file in files]
+    df_full = pd.concat(dfs, ignore_index=True)
+    return df_full
 
 #Remove the "´" Problem with Children's Music in genre (Briefly mentioned in Report, talked about in video): 
 def clean_genre(series: pd.Series) -> pd.Series:
